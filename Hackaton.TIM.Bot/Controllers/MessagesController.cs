@@ -22,39 +22,53 @@ namespace Hackaton.TIM.Bot
             }
             else
             {
-                HandleSystemMessage(activity);
+                await HandleSystemMessage(activity);
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
 
-        private Activity HandleSystemMessage(Activity message)
+        private async Task HandleSystemMessage(Activity activity)
         {
-            if (message.Type == ActivityTypes.DeleteUserData)
+            if (activity.Type == ActivityTypes.Event)
             {
-                // Implement user deletion here
-                // If we handle user deletion, return a real message
+                var value = activity.Value.ToString();
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var microsoftAppId = "f9789938-7703-4ac2-9e17-8f0fe96dd7ab";
+                    var microsoftAppPassword = "b3ofAxnPp9xqeZbkfaHBdvs";
+
+                    StateClient stateClient = new StateClient(new MicrosoftAppCredentials(microsoftAppId, microsoftAppPassword));
+                    BotData userData = await stateClient.BotState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
+
+                    switch (value)
+                    {
+                        case "QnADialog":
+                            userData.SetProperty("Dialog","QnADialog");
+                            break;
+                        case "NoInternetDialog":
+                            userData.SetProperty("Dialog","NoInternetDialog");
+                            break;
+                        
+                        case "Reset":
+                            userData.RemoveProperty("Dialog");
+                            break;
+                        default:
+                            userData.SetProperty("Dialog","RootDialog");
+                            break;
+                    }
+                    await stateClient.BotState.SetUserDataAsync(activity.ChannelId, activity.From.Id, userData);
+                }
             }
-            else if (message.Type == ActivityTypes.ConversationUpdate)
+            else if (activity.Type == ActivityTypes.ConversationUpdate)
             {
                 // Handle conversation state changes, like members being added and removed
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
             }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                // Handle add/remove from contact lists
-                // Activity.From + Activity.Action represent what happened
-            }
-            else if (message.Type == ActivityTypes.Typing)
-            {
-                // Handle knowing tha the user is typing
-            }
-            else if (message.Type == ActivityTypes.Ping)
+            else if (activity.Type == ActivityTypes.Ping)
             {
             }
-
-            return null;
         }
     }
 }
