@@ -26,26 +26,41 @@ namespace Hackaton.TIM.Bot.Dialogs
 
         private int _retry;
         private int _tries;
-
-        public QnADialog(string kbId)
+        private bool _supressStart;
+        private string _subject;
+        public QnADialog(string kbId, bool supressStart, string subject = "")
         {
+            _subject = subject;
             _qnaURL = _baseUrl + kbId + _method;
             _qnaKey = ConfigurationManager.AppSettings["QnAKey"];
             _retry = 3;
             _tries = 1;
+            _supressStart = supressStart;
         }
 
-        public Task StartAsync(IDialogContext context)
+        public async Task StartAsync(IDialogContext context)
         {
-            string message = "Ok, make your question!";
-            PromptDialog.Text(context, ResumeAfterQuestion, message);
-            return Task.CompletedTask;
+            if (!_supressStart)
+            {
+                string message = "Ok, make your question!";
+                PromptDialog.Text(context, ResumeAfterQuestion, message);
+            }
+            else
+            {
+                string message = context.Activity.AsMessageActivity().Text;
+                await QueryQna(context, message);
+            }
         }
 
         private async Task ResumeAfterQuestion(IDialogContext context, IAwaitable<string> result)
         {
+            await QueryQna(context, await result);
+        }
+
+        private async Task QueryQna(IDialogContext context, string result)
+        {
             var request = new AnswerRequest();
-            request.Question = await result;
+            request.Question = result;
 
             List<AnswerResponse> response = await getAnswer(request);
             if (response != null)
@@ -59,7 +74,7 @@ namespace Hackaton.TIM.Bot.Dialogs
                     {
                         var reply = context.MakeMessage();
                         reply.Text = "**" + item.Questions[0] + "**<br/>" + item.Answer;
-                        reply.AddHeroCard("Did I help you?", new[] { "Yes", "No" });
+                        reply.AddHeroCard("Esta resposta te ajudou?", new[] { "Sim", "Não" });
                         await context.PostAsync(reply);
                         context.Wait(RespostaSatistatoria);
 
@@ -71,9 +86,16 @@ namespace Hackaton.TIM.Bot.Dialogs
                 else
                 {
                     var reply = context.MakeMessage();
-
-                    reply.Text = "I could not find the answer.";
-                    reply.AddHeroCard("Would like to make another question?", new[] { "Yes", "No" });
+                    if (_tries == 1)
+                    {
+                        reply.Text = $"Certo! Identifiquei que você quer saber sobre {_subject}. Faça sua pergunta.";
+                        _tries++;
+                    }
+                    else
+                    {
+                        reply.Text = "Não encontrei sua resposta.";
+                        reply.AddHeroCard("Quer fazer outra pergunta?", new[] { "Sim", "Não" });
+                    }
                     await context.PostAsync(reply);
                     context.Wait(RespostaRefazerPergunta);
                 }
@@ -81,7 +103,7 @@ namespace Hackaton.TIM.Bot.Dialogs
             else
             {
                 if (_tries < _retry)
-                    PromptDialog.Text(context, ResumeAfterQuestion, "I could not find the answer, try again!");
+                    PromptDialog.Text(context, ResumeAfterQuestion, "Não pude encontrar sua resposta, tente novamente...");
                 else
                     context.Done(false);
 
@@ -108,7 +130,14 @@ namespace Hackaton.TIM.Bot.Dialogs
             var answer = ((Activity)await result).Text;
             if (answer != "No")
             {
-                PromptDialog.Text(context, ResumeAfterQuestion, "Make your question again...");
+                if (_tries == 1)
+                {
+                    await QueryQna(context, answer);
+                }
+                else
+                {
+                    PromptDialog.Text(context, ResumeAfterQuestion, "Make your question again...");
+                }
             }
             else
             {

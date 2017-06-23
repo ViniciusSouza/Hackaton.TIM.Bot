@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim.ConsultaFatura", "Tim.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim.Servicos", "Tim.Servicos\Tim.Servicos.csproj", "{06495698-CDA6-4888-880B-7A809451EDDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim.ConsultaFatura.Mock", "Tim.ConsultaFatura.Mock\Tim.ConsultaFatura.Mock.csproj", "{CE3CB455-C850-48FF-B0B6-BA0E49F1A614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{06495698-CDA6-4888-880B-7A809451EDDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06495698-CDA6-4888-880B-7A809451EDDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06495698-CDA6-4888-880B-7A809451EDDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3CB455-C850-48FF-B0B6-BA0E49F1A614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3CB455-C850-48FF-B0B6-BA0E49F1A614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3CB455-C850-48FF-B0B6-BA0E49F1A614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3CB455-C850-48FF-B0B6-BA0E49F1A614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
