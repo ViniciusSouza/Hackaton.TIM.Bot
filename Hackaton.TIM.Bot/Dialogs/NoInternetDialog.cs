@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Hackaton.TIM.Bot.Dialogs
 {
     [Serializable]
-    public class NoInternetDialog : IDialog
+    public class NoInternetDialog : IDialog<bool>
     {
         public async Task StartAsync(IDialogContext context)
         {

@@ -127,6 +127,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswerRequest.cs" />
+    <Compile Include="Models\AnswerResponse.cs" />
+    <Compile Include="Models\AnswersList.cs" />
+    <Compile Include="Models\CallHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
