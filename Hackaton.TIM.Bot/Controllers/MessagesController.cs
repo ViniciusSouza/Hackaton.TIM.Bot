@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using Hackaton.TIM.Bot.Models;
 
 namespace Hackaton.TIM.Bot
 {
@@ -32,7 +33,7 @@ namespace Hackaton.TIM.Bot
         {
             if (activity.Type == ActivityTypes.Event)
             {
-                var value = activity.Value.ToString();
+                var value = activity.Value.ToString().ToLower();
                 if (!string.IsNullOrEmpty(value))
                 {
                     var microsoftAppId = "f9789938-7703-4ac2-9e17-8f0fe96dd7ab";
@@ -41,21 +42,14 @@ namespace Hackaton.TIM.Bot
                     StateClient stateClient = new StateClient(new MicrosoftAppCredentials(microsoftAppId, microsoftAppPassword));
                     BotData userData = await stateClient.BotState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
 
-                    switch (value)
+                    if (value.Contains("call"))
                     {
-                        case "QnADialog":
-                            userData.SetProperty("Dialog","QnADialog");
-                            break;
-                        case "NoInternetDialog":
-                            userData.SetProperty("Dialog","NoInternetDialog");
-                            break;
-                        
-                        case "Reset":
-                            userData.RemoveProperty("Dialog");
-                            break;
-                        default:
-                            userData.SetProperty("Dialog","RootDialog");
-                            break;
+                        var dialog = new CallHandler().RegexMatcher(value);
+                        userData.SetProperty("Dialog", dialog);
+                    }
+                    else if (value.Contains("reset"))
+                    {
+                        userData.RemoveProperty("Dialog");
                     }
                     await stateClient.BotState.SetUserDataAsync(activity.ChannelId, activity.From.Id, userData);
                 }
