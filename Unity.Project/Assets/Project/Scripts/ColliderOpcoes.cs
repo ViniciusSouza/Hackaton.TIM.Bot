@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class ColliderOpcoes : MonoBehaviour {
 
+    public MainController controller;
+
     public enum BOT_TYPE
     {
         DetalhesConta,
@@ -14,6 +16,14 @@ public class ColliderOpcoes : MonoBehaviour {
         Faq,
         Minigame
     }
-    
-    
+    public BOT_TYPE thisType;
+
+    public void OnTriggerEnter(Collider other)
+    {
+        controller.OpenCharacter(thisType);
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        controller.ExitCharacter(thisType);
+    }
 }

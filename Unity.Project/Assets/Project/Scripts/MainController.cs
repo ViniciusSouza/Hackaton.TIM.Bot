@@ -1,59 +1,83 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Assets.BotDirectLine;
 using UnityEngine;
 
+/// <summary>
+/// Ponto de controle geral da aplicacao, interage com as aberturas de popup e recebe os comandos basicos de navegacao
+/// </summary>
 public class MainController : MonoBehaviour {
-
+    
     [System.Serializable]
-    public class Conversation
+    public class UserData
     {
-        public string ConversationId = "";
+        public string userName = "Atento Hackaton";
+        public string userId = "123456";
     }
 
-    public Conversation _conversationState = new Conversation();
+    public UserData thisUser = new UserData();
 
-    private void Start()
+    /// <summary>
+    /// Slides de mostram as perguntas que os personagens fazem (os 3 bots + o de minigame)
+    /// </summary>
+    public Talent.BaseSlide[] charactersInteraction;
+
+    public ConversationWindow conversationController;
+    public BotController botController;
+    public MyCharacterController characterController;
+
+    public int currentOpenActivity = -1;
+    
+    public void OpenCharacter(ColliderOpcoes.BOT_TYPE index)
     {
-        BotDirectLineManager.Initialize("WqKHIPdeZIw.cwA.qLU.Emp65KL245rQf80GI-QMrnhM4AD6dASW8dGd2VCCtTI");
-        BotDirectLineManager.Instance.BotResponse += OnBotResponse;
-        StartCoroutine(BotDirectLineManager.Instance.StartConversationCoroutine());
+        charactersInteraction[(int)index].SetSlideActive(true);
     }
-
-    private void Update()
+    /// <summary>
+    /// Faz uma interacao de foco num personagem
+    /// </summary>
+    /// <param name="index"></param>
+    public void FocusOn(int index, bool isFocusIn)
     {
-        if (Input.GetKeyDown(KeyCode.A))
+
+    }
+    /// <summary>
+    /// Abre a atividade de um bot especifico
+    /// </summary>
+    /// <param name="index"></param>
+    public void OpenBotActivity(int index)
+    {
+        currentOpenActivity = index;
+        //Abre a interacao no botController
+        botController.StartBotAction(index);
+        //Abre a conversacao
+        conversationController.OpenWindow(true);
+        //Foca no personagem
+        FocusOn(index, true);
+    }
+    /// <summary>
+    /// Abre o minigame em si
+    /// </summary>
+    public void OpenMinigame()
+    {
+
+    }
+    public void ExitCharacter(ColliderOpcoes.BOT_TYPE index)
+    {
+        charactersInteraction[(int)index].SetSlideActive(false);
+        if (currentOpenActivity != -1)
         {
-            StartCoroutine(BotDirectLineManager.Instance.SendMessageCoroutine(
-                _conversationState.ConversationId, "UnityUserId", "Hello bot!", "Unity User 1"));
+            //Fecha a atividade no botController
+            botController.EndBotAction(currentOpenActivity);
+            currentOpenActivity = -1;
+
+            //Fecha o popup de conversacao
+            conversationController.OpenWindow(false);
+
+            //Desfoca
+            FocusOn(-1, false);
         }
     }
-
-    private void OnBotResponse(object sender, Assets.BotDirectLine.BotResponseEventArgs e)
+    public void EnviaMensagem(string input)
     {
-        Debug.Log("OnBotResponse: " + e.ToString());
-
-        switch (e.EventType)
-        {
-            case EventTypes.ConversationStarted:
-                // Store the ID
-                _conversationState.ConversationId = e.ConversationId;
-                break;
-            case EventTypes.MessageSent:
-                if (!string.IsNullOrEmpty(_conversationState.ConversationId))
-                {
-                    // Get the bot's response(s)
-                    StartCoroutine(BotDirectLineManager.Instance.GetMessagesCoroutine(_conversationState.ConversationId));
-                }
-
-                break;
-            case EventTypes.MessageReceived:
-                // Handle the received message(s)
-                break;
-            case EventTypes.Error:
-                // Handle the error
-                break;
-        }
+        botController.EnviaMensagem(input, thisUser.userId, thisUser.userName);
     }
 }
