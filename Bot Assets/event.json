@@ -1,0 +1,14 @@
+{
+  "type": "event",
+  "value": "Call(QnADialog)",
+  "from": {
+    "id": "default-user",
+    "name": "User"
+  },
+  "timestamp": "2017-06-23T18:20:11.344Z",
+  "channelData": {
+    "clientActivityId": "1498244144136.2611871846539544.0"
+  },
+  "id": "dmeemj399ci7g3j4gc",
+  "ChannelId": "webchat"
+}
