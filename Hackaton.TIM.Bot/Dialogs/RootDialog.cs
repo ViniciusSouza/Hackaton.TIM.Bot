@@ -11,7 +11,6 @@ namespace Hackaton.TIM.Bot.Dialogs
         public Task StartAsync(IDialogContext context)
         {
             context.Wait(MessageReceivedAsync);
-
             return Task.CompletedTask;
         }
 
@@ -19,12 +18,38 @@ namespace Hackaton.TIM.Bot.Dialogs
         {
             var activity = await result as Activity;
 
-            // calculate something for us to return
-            int length = (activity.Text ?? string.Empty).Length;
+            var microsoftAppId = "f9789938-7703-4ac2-9e17-8f0fe96dd7ab";
+            var microsoftAppPassword = "b3ofAxnPp9xqeZbkfaHBdvs";
+            var channelId = "webchat";
 
-            // return our reply to the user
-            await context.PostAsync($"You sent {activity.Text} which was {length} characters");
+            StateClient stateClient = new StateClient(new MicrosoftAppCredentials(microsoftAppId, microsoftAppPassword));
+            BotData userData = await stateClient.BotState.GetUserDataAsync(channelId, activity.From.Id);
 
+            var dialog = userData.GetProperty<string>("Dialog");
+            if (dialog != null)
+            {
+                switch (dialog)
+                {
+                    case "qnadialog":
+                        context.Call(new QnADialog("40fd77cd-349d-4e31-8bab-9ee98c9f4b99"), ResumerAfter);
+                        break;
+                    case "nointernetdialog":
+                        context.Call(new NoInternetDialog(), ResumerAfter);
+                        break;
+                    default:
+                        context.Wait(MessageReceivedAsync);
+                        break;
+                }
+            }
+            else
+            {
+                context.Wait(MessageReceivedAsync);
+            }
+        }
+
+        private async Task ResumerAfter(IDialogContext context, IAwaitable<bool> result)
+        {
+            await context.PostAsync("back to black");
             context.Wait(MessageReceivedAsync);
         }
     }
