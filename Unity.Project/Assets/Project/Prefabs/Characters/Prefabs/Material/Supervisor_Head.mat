@@ -1,0 +1,250 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Supervisor_Head
+  m_Shader: {fileID: 4800000, guid: b84cef6579c188a469969e881172fafe, type: 3}
+  m_ShaderKeywords: _BRAVO_ON _EMISSION _MOVERBOCA_ON _VELOCIDADEBOCAS_ON
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _BocaAberta
+      second:
+        m_Texture: {fileID: 2800000, guid: be377a44814cb214a90b1cb2dacad410, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BocaAbertaBrava
+      second:
+        m_Texture: {fileID: 2800000, guid: 0b0ffdefdedaaa542b2d77457e4b68e6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BocaFechada
+      second:
+        m_Texture: {fileID: 2800000, guid: 056f2b3155d9d7942a78dc8f6a081ae9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BocaFechadaBrava
+      second:
+        m_Texture: {fileID: 2800000, guid: 95b877753d8bdb04f861f8602254c5bf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailAlbedoMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailMask
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailNormalMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _EmissionMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _HeadBase
+      second:
+        m_Texture: {fileID: 2800000, guid: 850953c9289f3ec41978ad4e602014dd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MetallicGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OcclusionMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OlhosAbertos
+      second:
+        m_Texture: {fileID: 2800000, guid: 261dfb700ac55784690cd8a75f60c001, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OlhosAbertosBravos
+      second:
+        m_Texture: {fileID: 2800000, guid: b370dce26ede56348accab17c7e3efd5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OlhosFechados
+      second:
+        m_Texture: {fileID: 2800000, guid: 7766031ca223d9a44990d6435d4ff09b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OlhosFechadosBravos
+      second:
+        m_Texture: {fileID: 2800000, guid: 394db26bcac85f746bd10f60dc24265f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ParallaxMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _texcoord
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _ASEOutlineWidth
+      second: 0.0001
+    - first:
+        name: _Bravo
+      second: 1
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _DstBlend
+      second: 0
+    - first:
+        name: _Float1
+      second: 5.74
+    - first:
+        name: _Float2
+      second: 0
+    - first:
+        name: _Frequenciadaspicadas
+      second: 0.1
+    - first:
+        name: _Frequenciadaspiscadas
+      second: 3.08
+    - first:
+        name: _Frequendaspiscadas
+      second: 0.1
+    - first:
+        name: _GlossMapScale
+      second: 1
+    - first:
+        name: _Glossiness
+      second: 0.5
+    - first:
+        name: _GlossyReflections
+      second: 1
+    - first:
+        name: _Int0
+      second: 1
+    - first:
+        name: _Int1
+      second: 10
+    - first:
+        name: _Metallic
+      second: 0
+    - first:
+        name: _Mode
+      second: 0
+    - first:
+        name: _MoverBoca
+      second: -1
+    - first:
+        name: _Mover_Boca
+      second: 1
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _Ramp
+      second: 40
+    - first:
+        name: _SmoothnessTextureChannel
+      second: 0
+    - first:
+        name: _SpecularHighlights
+      second: 1
+    - first:
+        name: _SrcBlend
+      second: 1
+    - first:
+        name: _Tempodaspiscadas
+      second: 12.7
+    - first:
+        name: _ToggleSwitch0
+      second: 0
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _Velocid
+      second: 0.1
+    - first:
+        name: _Velocidade
+      second: 0.1
+    - first:
+        name: _VelocidadeBocas
+      second: 9.3
+    - first:
+        name: _ZWrite
+      second: 1
+    - first:
+        name: __dirty
+      second: 0
+    m_Colors:
+    - first:
+        name: _ASEOutlineColor
+      second: {r: 0.18382353, g: 0.14387496, b: 0.10677984, a: 0}
+    - first:
+        name: _BaseColor
+      second: {r: 1, g: 1, b: 1, a: 0}
+    - first:
+        name: _Bravo
+      second: {r: 1, g: 0, b: 0, a: 0}
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 0, g: 0, b: 0, a: 1}
