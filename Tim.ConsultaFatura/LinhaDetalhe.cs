@@ -16,8 +16,8 @@ namespace Tim.ConsultaFatura
 
         public decimal Saldo { get; set; }
 
-        public long MbytesEnviados { get; set; }
+        public decimal MbytesEnviados { get; set; }
 
-        public long MBytesRecebidos { get; set; }
+        public decimal MBytesRecebidos { get; set; }
     }
 }

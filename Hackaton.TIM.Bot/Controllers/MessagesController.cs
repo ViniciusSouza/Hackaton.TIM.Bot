@@ -5,6 +5,7 @@ using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Hackaton.TIM.Bot.Models;
+using System;
 
 namespace Hackaton.TIM.Bot
 {
@@ -16,7 +17,7 @@ namespace Hackaton.TIM.Bot
         /// Receive a message from a user and reply to it
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
-        {
+        {try { 
             if (activity.Type == ActivityTypes.Message)
             {
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
@@ -25,8 +26,14 @@ namespace Hackaton.TIM.Bot
             {
                 await HandleSystemMessage(activity);
             }
+            }
+            catch(Exception ex)
+            {
+                var x = ex;
+            }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
+
         }
 
         private async Task HandleSystemMessage(Activity activity)

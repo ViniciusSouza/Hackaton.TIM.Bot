@@ -30,11 +30,11 @@ namespace Hackaton.TIM.Bot.Dialogs
             {
                 switch (dialog)
                 {
-                    case "qnadialog":
-                        context.Call(new QnADialog("40fd77cd-349d-4e31-8bab-9ee98c9f4b99"), ResumerAfter);
+                    case "detalhamentoconta":
+                        context.Call(new DetalhamentoDeUsoDialog(), ResumeAfter);
                         break;
                     case "nointernetdialog":
-                        context.Call(new NoInternetDialog(), ResumerAfter);
+                        context.Call(new NoInternetDialog(), ResumeAfter);
                         break;
                     default:
                         context.Wait(MessageReceivedAsync);
@@ -47,10 +47,12 @@ namespace Hackaton.TIM.Bot.Dialogs
             }
         }
 
-        private async Task ResumerAfter(IDialogContext context, IAwaitable<bool> result)
+        private async Task ResumeAfter(IDialogContext context, IAwaitable<object> result)
         {
             await context.PostAsync("back to black");
             context.Wait(MessageReceivedAsync);
         }
+
+        
     }
 }
