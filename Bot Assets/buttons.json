@@ -1,0 +1,43 @@
+{
+  "type": "message",
+  "timestamp": "2017-06-23T20:45:23.279Z",
+  "serviceUrl": "http://127.0.0.1:54264",
+  "channelId": "emulator",
+  "from": {
+    "id": "1ean4e13m9ic46bhjc",
+    "name": "Bot"
+  },
+  "conversation": {
+    "id": "kc04bbk1142m8k6dc"
+  },
+  "recipient": {
+    "id": "default-user"
+  },
+  "attachmentLayout": "list",
+  "locale": "en-US",
+  "text": "**O que é tecnologia 4G?**<br/>É a quarta geração da telefonia móvel, que terá seu início com a tecnologia LTE (Long Term Evolution ou Evolução de longo prazo).",
+  "attachments": [
+    {
+      "contentType": "application/vnd.microsoft.card.hero",
+      "content": {
+        "text": "Did I help you?",
+        "buttons": [
+          {
+            "type": "imBack",
+            "title": "Yes",
+            "value": "Yes"
+          },
+          {
+            "type": "imBack",
+            "title": "No",
+            "value": "No"
+          }
+        ]
+      }
+    }
+  ],
+  "entities": [],
+  "replyToId": "7f3bm9mhb02d648f",
+  "id": "2ha7g2he4ej6j72h6",
+  "localTimestamp": "2017-06-23T17:45:23-03:00"
+}
