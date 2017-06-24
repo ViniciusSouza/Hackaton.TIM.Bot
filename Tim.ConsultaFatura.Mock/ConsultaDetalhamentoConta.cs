@@ -10,14 +10,14 @@ namespace Tim.ConsultaFatura.Mock
 {
     public class ConsultaDetalhamentoConta : IConsultaDetalhamentoConta
     {
-        public DetalhamentoContaDTO Consultar(string numeroTelefone, string cpf, DateTime dataNascimento)
+        public DetalhamentoContaDTO Consultar(string numeroTelefone, string cpf, DateTime? dataNascimento)
         {
             
             
             return new DetalhamentoContaDTO
             {
                 CPF = cpf,
-                DataNascimento = dataNascimento,
+                DataNascimento = dataNascimento.Value,
                 Detalhes = new List<LinhaDetalhe>
                 {
                     new LinhaDetalhe
@@ -101,6 +101,16 @@ namespace Tim.ConsultaFatura.Mock
                 },
                 Nome = "Ulisses Santos"
             };
+        }
+
+        public object Consultar(object numeroTelefone, object cpf, object dataNascimeto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Consultar(object numeroTelefone, string cpf, object dataNascimeto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

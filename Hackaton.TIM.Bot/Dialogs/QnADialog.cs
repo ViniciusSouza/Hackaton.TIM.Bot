@@ -18,6 +18,7 @@ namespace Hackaton.TIM.Bot.Dialogs
     [Serializable]
     public class QnADialog : IDialog<bool>
     {
+         
         private string _baseUrl = "https://westus.api.cognitive.microsoft.com/qnamaker/v2.0/knowledgebases/";
         private string _method = "/generateAnswer";
 
@@ -51,10 +52,10 @@ namespace Hackaton.TIM.Bot.Dialogs
                 await QueryQna(context, message);
             }
         }
-
-        private async Task ResumeAfterQuestion(IDialogContext context, IAwaitable<string> result)
+        
+        private async Task ResumeAfterQuestion(IDialogContext context, IAwaitable<object> result)
         {
-            await QueryQna(context, await result);
+            await QueryQna(context, (await result).ToString());
         }
 
         private async Task QueryQna(IDialogContext context, string result)
@@ -114,21 +115,33 @@ namespace Hackaton.TIM.Bot.Dialogs
         private async Task RespostaSatistatoria(IDialogContext context, IAwaitable<object> result)
         {
             var answer = ((Activity)await result).Text;
-            if (answer == "Yes")
+
+            if (!(new string[] { "Sim", "Não" }).Contains(answer))
+            {
+                context.Wait(RespostaSatistatoria);
+                return;
+            }
+
+            if (answer == "Sim")
             {
                 context.Done(true);
             }
             else
             {
-                PromptDialog.Text(context, ResumeAfterQuestion, "Please, make another question:");
+                PromptDialog.Text(context, ResumeAfterQuestion, "Então faça outra pergunta para eu tentar te ajudar...");
             }
 
         }
 
         private async Task RespostaRefazerPergunta(IDialogContext context, IAwaitable<Object> result)
         {
+            
+
             var answer = ((Activity)await result).Text;
-            if (answer != "No")
+
+        
+
+            if (answer != "Não")
             {
                 if (_tries == 1)
                 {
@@ -136,7 +149,9 @@ namespace Hackaton.TIM.Bot.Dialogs
                 }
                 else
                 {
-                    PromptDialog.Text(context, ResumeAfterQuestion, "Make your question again...");
+                    _tries++;
+                    await context.PostAsync("Então me diga como posso te ajudar...");
+                    context.Wait(ResumeAfterQuestion);
                 }
             }
             else
@@ -145,7 +160,7 @@ namespace Hackaton.TIM.Bot.Dialogs
             }
         }
 
-
+      
 
         private async Task<List<AnswerResponse>> getAnswer(AnswerRequest question)
         {
