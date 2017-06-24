@@ -172,6 +172,57 @@ public class BotDirectLineManager
         }
     }
 
+    public IEnumerator SendEventCoroutine(string conversationId, string fromId, string value, string fromName = null)
+    {
+        if (string.IsNullOrEmpty(conversationId))
+        {
+            throw new ArgumentException("Conversation ID cannot be null or empty");
+        }
+
+        if (IsInitialized)
+        {
+            Debug.Log("SendEventCoroutine: " + conversationId + "; " + value);
+
+            UnityWebRequest webRequest = CreateWebRequest(
+                WebRequestMethods.Post,
+                DirectLineConversationsApiUri
+                + "/" + conversationId
+                + "/" + DirectLineActivitiesApiUriPostfix,
+                new EventActivity(fromId, value, DirectLineChannelId, null, fromName).ToJsonString());
+
+            yield return webRequest.Send();
+
+            if (webRequest.isError)
+            {
+                Debug.Log("Web request failed: " + webRequest.error);
+            }
+            else
+            {
+                string responseAsString = webRequest.downloadHandler.text;
+
+                if (!string.IsNullOrEmpty(responseAsString))
+                {
+                    //Debug.Log("Received response:\n" + responseAsString);
+                    BotResponseEventArgs eventArgs = CreateBotResponseEventArgs(responseAsString);
+
+                    if (BotResponse != null)
+                    {
+                        BotResponse.Invoke(this, eventArgs);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Received an empty response");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Bot Direct Line manager is not initialized");
+            yield return null;
+        }
+    }
+
     /// <summary>
     /// Retrieves the activities of the given conversation.
     /// </summary>
@@ -280,6 +331,8 @@ public class BotDirectLineManager
             throw new ArgumentException("Response cannot be null or empty");
         }
 
+        Debug.Log(responseAsString);
+        //BotResponseEventArgs bot = 
         JSONNode responseJsonRootNode = JSONNode.Parse(responseAsString);
         JSONNode jsonNode = null;
         BotResponseEventArgs eventArgs = new BotResponseEventArgs();

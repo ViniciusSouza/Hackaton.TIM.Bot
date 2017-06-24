@@ -11,6 +11,7 @@ public class ConversationWindow : MonoBehaviour {
     public MainController mainController;
 
     public GameObject prefabBotMessage;
+    public GameObject prefabBotFatura;
     public GameObject prefabPlayerAnswer;
 
     public Transform containerMessages;
@@ -22,8 +23,15 @@ public class ConversationWindow : MonoBehaviour {
 
     public InputField inputMensagem;
 
+    public Content attachmentDebug = new Content();
+    public TextAsset txtJson;
+
     public int count = 0;
 
+    private void Start()
+    {
+        attachmentDebug = JsonUtility.FromJson<Content>(txtJson.text);
+    }
     public void Reset()
     {
         for (int x = 0; x < spawnedMessages.Count; x++)
@@ -49,8 +57,40 @@ public class ConversationWindow : MonoBehaviour {
         //Sempre pega o ultimo watermark
         int watermark = int.Parse(data.Watermark) - 1;
         //Avalia a mensagem recebida
-        //TODO (filtrar caso seja botoes)
-        AddBotMessage(data.Messages[watermark].Text);
+        bool isAttachment = false;
+        /*if (data.Messages[watermark].Attachments.Count > 0)
+        {
+            //Nao estou tratando muitplos attachments
+            isAttachment = true;
+        }*/
+
+        if (isAttachment)
+        {
+            switch (data.Messages[watermark].Attachments[0].contentType)
+            {
+                case "application/vnd.microsoft.card.hero":
+                    //Botoes
+                    string[] buttons = new string[data.Messages[watermark].Attachments[0].content[0].buttons.Count];
+                    for (int x = 0; x < buttons.Length; x++)
+                    {
+                        buttons[x] = data.Messages[watermark].Attachments[0].content[0].buttons[x].value;
+                    }
+                    AddBotMessageWithButtons(data.Messages[watermark].Text, data.Messages[watermark].Attachments[0].content[0].content, buttons);
+                    break;
+                case "fatura":
+                    //Informacoes de fatura
+                    AddBotFatura(data.Messages[watermark].Text, data.Messages[watermark].Attachments[0].content[0]);
+                    break;
+                default:
+                    AddBotMessage(data.Messages[watermark].Text);
+                    break;
+            }
+        }
+        else
+        {
+            AddBotMessage(data.Messages[watermark].Text);
+        }
+        //AddBotMessageWithButtons("Teste", new string[2] { "Sim", "Não" });
     }
 
     public void OpenWindow(bool cmd)
@@ -62,16 +102,26 @@ public class ConversationWindow : MonoBehaviour {
             mainController.botController.Evt_OnMessageReceived -= BotController_Evt_OnMessageReceived;
         }
     }
-    public void AddBotMessageWithButtons(string message, string[] buttons)
+    public void AddBotFatura(string message, Content content)
+    {
+        //Spanwa
+        GameObject g = (GameObject)Instantiate(prefabBotFatura, containerMessages);
+        g.GetComponent<FaturaMessage>().SetMessage(this, message, content);
+        AddMessage(g);
+    }
+    public void AddBotMessageWithButtons(string message, string extraQuestion, string[] buttons)
     {
         //Spanwa
         GameObject g = (GameObject)Instantiate(prefabBotMessage, containerMessages);
-        g.GetComponent<Message>().SetMessage(this, message, charactersIcons[mainController.currentOpenActivity]);
+        g.GetComponent<Message>().SetMessage(this, message + "\n" + extraQuestion, charactersIcons[mainController.currentOpenActivity]);
         g.GetComponent<Message>().SetAlternatives(buttons);
         AddMessage(g);
     }
     public void AddBotMessage(string message)
     {
+        if (string.IsNullOrEmpty(message))
+            return;
+
         //Spanwa
         GameObject g = (GameObject)Instantiate(prefabBotMessage, containerMessages);
         g.GetComponent<Message>().SetMessage(this, message, charactersIcons[mainController.currentOpenActivity]);
@@ -92,6 +142,10 @@ public class ConversationWindow : MonoBehaviour {
 
         spawnedMessages.Add(obj);
     }
+    public void EnviaMensagem()
+    {
+        EnviaMensagem(true);
+    }
     /// <summary>
     /// Determina se adiciona o visual na lista de mensagens
     /// </summary>
@@ -111,6 +165,15 @@ public class ConversationWindow : MonoBehaviour {
             AddPlayerMessage(input);
         }
 
-        mainController.EnviaMensagem(input);
+        //ToDO - meu deus
+        if (mainController.currentOpenActivity == 1)
+        {
+            mainController.EnviaMensagem(input);
+        }
+        else
+        {
+            AddBotFatura("Sua conta:", attachmentDebug);
+            Debug.Log("Esta tentando mandar de outro");
+        }
     }
 }

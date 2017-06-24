@@ -10,6 +10,10 @@ public class BotController : MonoBehaviour {
     public delegate void OnMessageReceived(BotResponseEventArgs data);
     public event OnMessageReceived Evt_OnMessageReceived;
 
+    //public MessageActivity data;
+
+    public string[] tiposActivity;
+
     [System.Serializable]
     public class Conversation
     {
@@ -20,7 +24,7 @@ public class BotController : MonoBehaviour {
 
     private void Start()
     {
-        BotDirectLineManager.Initialize("WqKHIPdeZIw.cwA.qLU.Emp65KL245rQf80GI-QMrnhM4AD6dASW8dGd2VCCtTI");
+        BotDirectLineManager.Initialize("v-EKTLVRnMY.cwA.uVQ.hnXuX73CXibcI4diQcmWP0KAPBL7gxM1QiPB_w0mK1o");
         BotDirectLineManager.Instance.BotResponse += OnBotResponse;
         StartCoroutine(BotDirectLineManager.Instance.StartConversationCoroutine());
     }
@@ -30,13 +34,16 @@ public class BotController : MonoBehaviour {
         StartCoroutine(BotDirectLineManager.Instance.SendMessageCoroutine(
                 _conversationState.ConversationId, userId, message, userName));
     }
-    public void StartBotAction(int index)
+    public void StartBotAction(int index, string userId, string userName)
     {
-
+        StartCoroutine(BotDirectLineManager.Instance.SendEventCoroutine(
+                _conversationState.ConversationId, userId, tiposActivity[index], userName));
     }
-    public void EndBotAction(int index)
+    public void EndBotAction(int index, string userId, string userName)
     {
-
+        //Tipo 3 é o reset
+        StartCoroutine(BotDirectLineManager.Instance.SendEventCoroutine(
+                _conversationState.ConversationId, userId, tiposActivity[3], userName));
     }
 
     private void OnBotResponse(object sender, Assets.BotDirectLine.BotResponseEventArgs e)

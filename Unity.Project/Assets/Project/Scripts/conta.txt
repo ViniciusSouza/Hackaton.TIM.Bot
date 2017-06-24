@@ -1,0 +1,100 @@
+{
+        "Nome": "Ulisses Santos",
+        "CPF": "21341234",
+        "DataNascimento": "1980-07-14T00:00:00Z",
+        "Detalhes": [
+          {
+            "Tipo": 0,
+            "DataHora": "2017-06-17T16:00:00Z",
+            "Descricao": "Chamada recebida",
+            "Duracao": "PT3M54S",
+            "Valor": 0.14,
+            "Saldo": 20,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          },
+          {
+            "Tipo": 0,
+            "DataHora": "2017-06-22T21:00:00Z",
+            "NumeroDestino": "11986556339",
+            "Descricao": "Chamada efetuada",
+            "Duracao": "PT9M23S",
+            "Valor": 0.19,
+            "Saldo": 19.81,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          },
+          {
+            "Tipo": 1,
+            "DataHora": "2017-06-21T20:00:00Z",
+            "Descricao": "Dados",
+            "Duracao": "PT0S",
+            "Valor": 0.18,
+            "Saldo": 19.63,
+            "MbytesEnviados": 5,
+            "MBytesRecebidos": 7.4
+          },
+          {
+            "Tipo": 0,
+            "DataHora": "2017-06-22T14:00:00Z",
+            "NumeroDestino": "31993663763",
+            "Descricao": "Chamada efetuada",
+            "Duracao": "PT5M43S",
+            "Valor": 0.12,
+            "Saldo": 19.51,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          },
+          {
+            "Tipo": 0,
+            "DataHora": "2017-06-24T19:00:00Z",
+            "NumeroDestino": "31993663763",
+            "Descricao": "Chamada recebida",
+            "Duracao": "PT9M3S",
+            "Valor": 0.17,
+            "Saldo": 19.34,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          },
+          {
+            "Tipo": 0,
+            "DataHora": "2017-06-25T15:00:00Z",
+            "Descricao": "Chamada recebida",
+            "Duracao": "PT5M21S",
+            "Valor": 0.13,
+            "Saldo": 19.21,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          },
+          {
+            "Tipo": 1,
+            "DataHora": "2017-06-25T00:00:00Z",
+            "Descricao": "Dados",
+            "Duracao": "PT0S",
+            "Valor": 0.21,
+            "Saldo": 19,
+            "MbytesEnviados": 7,
+            "MBytesRecebidos": 6
+          },
+          {
+            "Tipo": 0,
+            "DataHora": "2017-06-26T00:00:00Z",
+            "Descricao": "Chamada recebida",
+            "Duracao": "PT3M54S",
+            "Valor": 0.15,
+            "Saldo": 18.85,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          },
+		  {
+            "Tipo": 2,
+            "DataHora": "2017-06-26T00:00:00Z",
+            "Descricao": "Chamada recebida",
+            "Duracao": "PT3M54S",
+            "Valor": 25.15,
+            "Saldo": 18.85,
+            "MbytesEnviados": 0,
+            "MBytesRecebidos": 0
+          }
+        ]
+      }

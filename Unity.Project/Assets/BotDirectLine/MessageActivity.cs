@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.BotDirectLine
 {
+    [System.Serializable]
     public class MessageActivity
     {   
         public DateTime Timestamp
@@ -52,11 +54,14 @@ namespace Assets.BotDirectLine
             set;
         }
 
+        public List<Attachment> Attachments = new List<Attachment>();
+
         /// <summary>
         /// Constructor.
         /// </summary>
         public MessageActivity()
         {
+            Attachments = new List<Attachment>();
         }
 
         /// <summary>
@@ -87,6 +92,7 @@ namespace Assets.BotDirectLine
             ConversationId = conversationId;
             Text = text;
             ReplyToId = replyToId;
+            Attachments = new List<Attachment>();
         }
 
         public static MessageActivity FromJson(SimpleJSON.JSONNode activityJsonRootNode)
@@ -111,8 +117,25 @@ namespace Assets.BotDirectLine
                 messageActivity.ConversationId = fromJsonRootNode[BotJsonProtocol.KeyId];
             }
 
+            UnityEngine.Debug.Log(activityJsonRootNode.Value);
             messageActivity.Text = activityJsonRootNode[BotJsonProtocol.KeyText];
             messageActivity.ReplyToId = activityJsonRootNode[BotJsonProtocol.KeyReplyToId];
+
+            SimpleJSON.JSONNode jsonNode = activityJsonRootNode[BotJsonProtocol.KeyAttachments];
+            if ((jsonNode) != null)
+            {
+                //eventArgs.Watermark = responseJsonRootNode[BotJsonProtocol.KeyWatermark];
+                //Cada attachment individualmente
+                SimpleJSON.JSONArray jsonArray = jsonNode.AsArray;
+                
+                foreach (SimpleJSON.JSONNode activityNode in jsonArray)
+                {
+                    UnityEngine.Debug.Log(activityNode.Value);
+                    messageActivity.Attachments.Add(UnityEngine.JsonUtility.FromJson<Attachment>(activityNode.Value));
+                    //MessageActivity messageActivity = MessageActivity.FromJson(activityNode);
+                    //eventArgs.Messages.Add(messageActivity);
+                }
+            }
 
             return messageActivity;
         }

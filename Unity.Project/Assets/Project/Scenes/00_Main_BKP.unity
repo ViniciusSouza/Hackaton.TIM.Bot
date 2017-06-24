@@ -271,7 +271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &22595099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1741,8 +1741,8 @@ MonoBehaviour:
   mainController: {fileID: 516227364}
   tiposActivity:
   - Call(detalhamentoconta)
-  - Call(faq)
-  - Call(servicos)
+  - Call(nointernetdialog)
+  - Call(alterarservicos)
   - Call(reset)
   _conversationState:
     ConversationId: 
@@ -10075,8 +10075,6 @@ MonoBehaviour:
   mainController: {fileID: 516227364}
   prefabBotMessage: {fileID: 1597043355112674, guid: eaba16d514e2f2b418b9227d7b33ed07,
     type: 2}
-  prefabBotFatura: {fileID: 1517347867166976, guid: b80ed548bf65bac45b452176bf65c635,
-    type: 2}
   prefabPlayerAnswer: {fileID: 1517347867166976, guid: 0bd1b92b21267b046a422669b87c3677,
     type: 2}
   containerMessages: {fileID: 1143266298}
@@ -10087,14 +10085,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3aae7597c85f65c42b35487eeb2d76ee, type: 3}
   - {fileID: 21300000, guid: 456814a49831bee4d8c31bc6d151b6ce, type: 3}
   inputMensagem: {fileID: 140302720}
-  attachmentDebug:
-    content: 
-    buttons: []
-    Nome: 
-    CPF: 
-    DataNascimento: 
-    Detalhes: []
-  txtJson: {fileID: 4900000, guid: d2d40709e81124642b8e23fcb4edabeb, type: 3}
   count: 0
 --- !u!1 &523541975
 GameObject:
@@ -17856,7 +17846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.036392212, y: -8916.672}
+  m_AnchoredPosition: {x: -0.036392212, y: -1122.3817}
   m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1143266299

@@ -22,5 +22,6 @@ namespace Assets.BotDirectLine
         public const string KeyTimestamp = "timestamp";
         public const string KeyValue = "value";
         public const string KeyWatermark = "watermark";
+        public const string KeyAttachments = "attachments";
     }
 }

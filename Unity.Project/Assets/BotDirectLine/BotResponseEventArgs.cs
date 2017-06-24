@@ -12,6 +12,7 @@ namespace Assets.BotDirectLine
         Error
     }
 
+    [System.Serializable]
     public class BotResponseEventArgs : EventArgs
     {
         public EventTypes EventType
@@ -61,7 +62,7 @@ namespace Assets.BotDirectLine
             get;
             private set;
         }
-
+        
         public BotResponseEventArgs()
         {
             EventType = EventTypes.None;

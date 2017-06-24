@@ -38,16 +38,19 @@ public class Message : MonoBehaviour {
     {
         GameObject g = (GameObject)Instantiate(prefabOpcao, containerBotoes);
         g.transform.localPosition = Vector3.zero;
-        g.transform.localScale = Vector3.one;
+        g.transform.localScale = new Vector3(1, 0.8f, 1);
         g.transform.localRotation = Quaternion.identity;
         
         g.GetComponent<Button>().onClick.AddListener(() => ClickedButton(alternative));
+
+        g.GetComponentInChildren<Text>().text = alternative;
+
         spawnedButtons.Add(g);
     }
     public void ClickedButton(string option)
     {
         //Manda para o controller a resposta
-        window.EnviaMensagem(false, option);
+        window.EnviaMensagem(true, option);
         //Desabilita todos os botoes dessa mensagem
         for (int x = 0; x < spawnedButtons.Count; x++)
         {

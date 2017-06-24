@@ -80,7 +80,7 @@ public class MainController : MonoBehaviour {
 
         currentOpenActivity = index;
         //Abre a interacao no botController
-        botController.StartBotAction(index);
+        botController.StartBotAction(index, thisUser.userId, thisUser.userName);
         //Abre a conversacao
         conversationController.StartNewConversation();
         //Foca no personagem
@@ -98,7 +98,7 @@ public class MainController : MonoBehaviour {
         if (currentOpenActivity != -1)
         {
             //Fecha a atividade no botController
-            botController.EndBotAction(currentOpenActivity);
+            botController.EndBotAction(3, thisUser.userId, thisUser.userName);
             currentOpenActivity = -1;
 
             //Fecha o popup de conversacao
@@ -116,7 +116,7 @@ public class MainController : MonoBehaviour {
         if (currentOpenActivity != -1)
         {
             //Fecha a atividade no botController
-            botController.EndBotAction(currentOpenActivity);
+            botController.EndBotAction(3, thisUser.userId, thisUser.userName);
             currentOpenActivity = -1;
 
             //Fecha o popup de conversacao
