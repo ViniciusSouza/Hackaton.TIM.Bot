@@ -62,22 +62,26 @@ public class ConversationWindow : MonoBehaviour {
             mainController.botController.Evt_OnMessageReceived -= BotController_Evt_OnMessageReceived;
         }
     }
-    public void AddBotMessageWithButtons()
+    public void AddBotMessageWithButtons(string message, string[] buttons)
     {
-        //TODO
+        //Spanwa
+        GameObject g = (GameObject)Instantiate(prefabBotMessage, containerMessages);
+        g.GetComponent<Message>().SetMessage(this, message, charactersIcons[mainController.currentOpenActivity]);
+        g.GetComponent<Message>().SetAlternatives(buttons);
+        AddMessage(g);
     }
     public void AddBotMessage(string message)
     {
         //Spanwa
         GameObject g = (GameObject)Instantiate(prefabBotMessage, containerMessages);
-        g.GetComponent<Message>().SetMessage(message, charactersIcons[mainController.currentOpenActivity]);
+        g.GetComponent<Message>().SetMessage(this, message, charactersIcons[mainController.currentOpenActivity]);
         AddMessage(g);
     }
     public void AddPlayerMessage(string message)
     {
         //Spanwa
         GameObject g = (GameObject)Instantiate(prefabPlayerAnswer, containerMessages);
-        g.GetComponent<Message>().SetMessage(message);
+        g.GetComponent<Message>().SetMessage(this, message);
         AddMessage(g);
     }
     private void AddMessage(GameObject obj)
@@ -92,10 +96,12 @@ public class ConversationWindow : MonoBehaviour {
     /// Determina se adiciona o visual na lista de mensagens
     /// </summary>
     /// <param name="addVisual"></param>
-    public void EnviaMensagem(bool addVisual)
+    public void EnviaMensagem(bool addVisual, string text = "")
     {
         //Pega a mensagem do jogaodr
         string input = inputMensagem.text;
+        if(text != "")
+            input = text;
 
         //Limpa o input de mensagem
         inputMensagem.text = "";

@@ -58,6 +58,9 @@ public class MyCharacterController : MonoBehaviour {
     public IEnumerator MoveToDestination(int targetDestination)
     {
         currentDestination = targetDestination;
+        
+        characterAnimator.SetBool("DoAction", false);
+
         isMoving = true;
 
         //Fazer movimentacao do perosnagem
@@ -76,5 +79,10 @@ public class MyCharacterController : MonoBehaviour {
         }
         
         isMoving = false;
+
+        yield return new WaitForSeconds(1);
+
+        if (currentDestination == 4)
+            characterAnimator.SetBool("DoAction", true);
     }
 }

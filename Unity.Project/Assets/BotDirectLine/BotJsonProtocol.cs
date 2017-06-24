@@ -12,6 +12,7 @@ namespace Assets.BotDirectLine
         public const string KeyConversation = "conversation";
         public const string KeyConversationId = "conversationId";
         public const string KeyError = "error";
+        public const string KeyEvent = "event";
         public const string KeyFrom = "from";
         public const string KeyId = "id";
         public const string KeyMessage = "message";
@@ -19,6 +20,7 @@ namespace Assets.BotDirectLine
         public const string KeyReplyToId = "replyToId";
         public const string KeyText = "text";
         public const string KeyTimestamp = "timestamp";
+        public const string KeyValue = "value";
         public const string KeyWatermark = "watermark";
     }
 }
