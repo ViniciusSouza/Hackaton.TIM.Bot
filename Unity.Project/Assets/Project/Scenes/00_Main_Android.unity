@@ -271,7 +271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &22595099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3486,7 +3486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -144, y: -110}
+  m_AnchoredPosition: {x: 40, y: -155}
   m_SizeDelta: {x: 190, y: 72.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &364584392
@@ -10177,6 +10177,8 @@ MonoBehaviour:
   mainController: {fileID: 516227364}
   prefabBotMessage: {fileID: 1597043355112674, guid: eaba16d514e2f2b418b9227d7b33ed07,
     type: 2}
+  prefabBotFatura: {fileID: 1517347867166976, guid: b80ed548bf65bac45b452176bf65c635,
+    type: 2}
   prefabPlayerAnswer: {fileID: 1517347867166976, guid: 0bd1b92b21267b046a422669b87c3677,
     type: 2}
   containerMessages: {fileID: 1143266298}
@@ -10187,6 +10189,31 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3aae7597c85f65c42b35487eeb2d76ee, type: 3}
   - {fileID: 21300000, guid: 456814a49831bee4d8c31bc6d151b6ce, type: 3}
   inputMensagem: {fileID: 140302720}
+  attachmentDebug:
+    content: 
+    buttons: []
+    Nome: 
+    CPF: 
+    DataNascimento: 
+    Detalhes: []
+  txtJson: {fileID: 4900000, guid: d2d40709e81124642b8e23fcb4edabeb, type: 3}
+  premadeRoteiro:
+  - "Tudo bem? S\xF3 lembrando que aqui comigo voc\xEA n\xE3o est\xE1 consumindo seu
+    pacote de dados."
+  - "Hmmm. Ser\xE1 que voc\xEA j\xE1 n\xE3o usou o cr\xE9dito? Olha s\xF3! Voc\xEA
+    colocou R$ 10 na data de 22/06 e  usou este valor da seguinte forma: R$ 7 em dados
+    e R$ 3 em liga\xE7\xF5es."
+  - "\xD3timo! Baixe o aplicativo de recarga TIM ou acesse meutim.com.br agora."
+  - "Isso \xE9 \xF3timo! Mas eu n\xE3o consigo fazer isso por aqui...  Posso pedir
+    para algu\xE9m entrar em contato com voc\xEA por telefone?"
+  - "Qual o melhor hor\xE1rio? Manh\xE3, tarde ou noite?"
+  - "\xD3timo. Amanh\xE3 mesmo vamos entrar em contato com voc\xEA"
+  - "Maravilha! Temos as seguintes op\xE7\xF5es para voc\xEA: hor\xF3scopo, futebol
+    ou previs\xE3o do tempo?"
+  - "Tamb\xE9m adoro futebol. Qual o seu time do cora\xE7\xE3o?"
+  - "\xC9! N\xE3o estamos muito bem. Mas vamos melhorar. M1TO vai fazer o time jogar
+    neste final de  semana. Posso contratar o servi\xE7o?"
+  - Salve o tricolor paulista.......
   count: 0
 --- !u!1 &523541975
 GameObject:
@@ -10382,7 +10409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -44, y: -282}
+  m_AnchoredPosition: {x: 136, y: -251}
   m_SizeDelta: {x: 190, y: 72.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &542042022
@@ -12708,7 +12735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: -37}
+  m_AnchoredPosition: {x: 92, y: -60}
   m_SizeDelta: {x: 190, y: 72.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &834614026
@@ -17982,7 +18009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.036392212, y: -88667.18}
+  m_AnchoredPosition: {x: -0.036392212, y: -105151.99}
   m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1143266299
