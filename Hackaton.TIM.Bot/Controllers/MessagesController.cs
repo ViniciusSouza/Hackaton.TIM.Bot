@@ -17,17 +17,19 @@ namespace Hackaton.TIM.Bot
         /// Receive a message from a user and reply to it
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
-        {try { 
-            if (activity.Type == ActivityTypes.Message)
+        {
+            try
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                if (activity.Type == ActivityTypes.Message)
+                {
+                    await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                }
+                else
+                {
+                    await HandleSystemMessage(activity);
+                }
             }
-            else
-            {
-                await HandleSystemMessage(activity);
-            }
-            }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var x = ex;
             }

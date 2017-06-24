@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Carubbi.Utils, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Carubbi.Utils.1.4.3.0\lib\net45\Carubbi.Utils.dll</HintPath>
+      <HintPath>..\..\Carubbi.Components\Carubbi.Utils\bin\Release\Carubbi.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

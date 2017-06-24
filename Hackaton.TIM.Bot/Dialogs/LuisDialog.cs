@@ -13,7 +13,6 @@ namespace Hackaton.TIM.Bot.Dialogs
     public class LuisDialog : LuisDialog<object>
     {
      
-
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
         {
