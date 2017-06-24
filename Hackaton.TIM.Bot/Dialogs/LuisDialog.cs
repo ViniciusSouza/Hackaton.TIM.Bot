@@ -9,20 +9,28 @@ using System.Threading;
 namespace Hackaton.TIM.Bot.Dialogs
 {
     [Serializable]
-    [LuisModel("037d4268-1cc4-454a-ad9c-3cc901ecffaa", "fdc9558fda374d078767a164c34fb768")]
+    [LuisModel("037d4268-1cc4-454a-ad9c-3cc901ecffaa", "fdc9558fda374d078767a164c34fb768", LuisApiVersion.V2, domain: "eastus2.api.cognitive.microsoft.com")]
     public class LuisDialog : LuisDialog<object>
     {
-     
+
+        public override async Task StartAsync(IDialogContext context)
+        {
+            await context.PostAsync("Sobre o que você quer saber?");
+            await base.StartAsync(context);
+        }
+
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
         {
             await context.PostAsync("Desculpe, não entendi sua pergunta.");
+            context.Wait(MessageReceived);
         }
         
-        [LuisIntent("ContaEPlanos")]
+        [LuisIntent("ContasEPlanos")]
         public async Task ContaEPlanos(IDialogContext context, LuisResult result)
         {
            await context.Forward(new QnADialog("2cf64e89-4897-4e77-9b4e-7bbec9623f94", true, "Contas e planos"), AfterAnswer, context.Activity.AsMessageActivity(), CancellationToken.None);
+
         }
 
         [LuisIntent("4G")]
@@ -48,7 +56,8 @@ namespace Hackaton.TIM.Bot.Dialogs
 
         private Task AfterAnswer(IDialogContext context, IAwaitable<bool> result)
         {
-            throw new NotImplementedException();
+            context.Done(string.Empty);
+            return Task.CompletedTask;
         }
     }
 }

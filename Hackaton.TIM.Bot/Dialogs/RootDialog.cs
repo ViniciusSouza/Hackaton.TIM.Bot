@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using Hackaton.TIM.Bot.Models;
 
 namespace Hackaton.TIM.Bot.Dialogs
 {
@@ -31,10 +32,13 @@ namespace Hackaton.TIM.Bot.Dialogs
                 switch (dialog)
                 {
                     case "detalhamentoconta":
-                        context.Call(new DetalhamentoDeUsoDialog(), ResumeAfter);
+                        context.Call(new DetalhamentoDeUsoDialog(DetalhamentoContaRequest.BuildForm), ResumeAfter);
                         break;
-                    case "nointernetdialog":
-                        context.Call(new NoInternetDialog(), ResumeAfter);
+                    case "faq":
+                        context.Call(new LuisDialog(), ResumeAfter);
+                        break;
+                    case "servicos":
+                        context.Call(new ServicosDialog(), ResumeAfter);
                         break;
                     default:
                         context.Wait(MessageReceivedAsync);
