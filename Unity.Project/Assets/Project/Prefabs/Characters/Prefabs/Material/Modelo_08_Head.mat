@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Modelo_08_Head
   m_Shader: {fileID: 4800000, guid: b84cef6579c188a469969e881172fafe, type: 3}
-  m_ShaderKeywords: _EMISSION _VELOCIDADEBOCAS_ON
+  m_ShaderKeywords: _EMISSION _MOVERBOCA_ON _VELOCIDADEBOCAS_ON
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -189,7 +189,7 @@ Material:
       second: 0
     - first:
         name: _MoverBoca
-      second: 0
+      second: 1
     - first:
         name: _Mover_Boca
       second: 1

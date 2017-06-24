@@ -10,13 +10,14 @@ public class MyCharacterController : MonoBehaviour {
     public bool isLocked = false;
 
     public Transform characterObj;
+    public Transform refCamera;
 
     /// <summary>
     /// Fazer por transform - SORRY
     /// </summary>
     public int currentDestination = 0;
     public Transform[] destinations;
-    public float speedDesloc = 2;
+    public float timeDesloc = 2;
 
     public bool isMoving = false;
 
@@ -24,8 +25,8 @@ public class MyCharacterController : MonoBehaviour {
 
     public void Update()
     {
-        DetectInputs();
         DetectSpeed();
+        IdleRotation();
     }
     private void DetectSpeed()
     {
@@ -34,26 +35,46 @@ public class MyCharacterController : MonoBehaviour {
         else
             characterAnimator.SetFloat("Speed", 0);
     }
-    public void DetectInputs()
+    private void IdleRotation()
     {
+        if (isMoving)
+            return;
 
+        Quaternion original = characterObj.rotation;
+        characterObj.LookAt(refCamera);
+        characterObj.eulerAngles = new Vector3(0, characterObj.eulerAngles.y, 0);
+        Quaternion target = characterObj.rotation;
+
+        characterObj.rotation = Quaternion.Slerp(original, target, Time.deltaTime * 5);
     }
     /// <summary>
-    /// Avanca para o proximo ou anterior
+    /// Avanca para o target desejado
     /// </summary>
     /// <param name="cmd"></param>
     public void MoveToTarget(int cmd)
     {
-
-    } 
+        StartCoroutine(MoveToDestination(cmd));
+    }
     public IEnumerator MoveToDestination(int targetDestination)
     {
         currentDestination = targetDestination;
         isMoving = true;
 
         //Fazer movimentacao do perosnagem
-        yield return new WaitForEndOfFrame();
+        float lerp = 0;
+        Vector3 originalPos = characterObj.position;
+        while (lerp < 1)
+        {
+            characterObj.position = Vector3.Lerp(originalPos, destinations[currentDestination].position, lerp);
+            lerp += Time.deltaTime / timeDesloc;
 
+            //Rotaciona o personagem em direcao ao destino
+            characterObj.LookAt(destinations[currentDestination]);
+            characterObj.eulerAngles = new Vector3(0, characterObj.eulerAngles.y, 0);
+
+            yield return new WaitForEndOfFrame();
+        }
+        
         isMoving = false;
     }
 }

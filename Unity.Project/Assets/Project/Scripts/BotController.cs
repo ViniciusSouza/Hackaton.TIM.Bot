@@ -7,6 +7,8 @@ using System;
 public class BotController : MonoBehaviour {
     
     public MainController mainController;
+    public delegate void OnMessageReceived(BotResponseEventArgs data);
+    public event OnMessageReceived Evt_OnMessageReceived;
 
     [System.Serializable]
     public class Conversation
@@ -21,15 +23,6 @@ public class BotController : MonoBehaviour {
         BotDirectLineManager.Initialize("WqKHIPdeZIw.cwA.qLU.Emp65KL245rQf80GI-QMrnhM4AD6dASW8dGd2VCCtTI");
         BotDirectLineManager.Instance.BotResponse += OnBotResponse;
         StartCoroutine(BotDirectLineManager.Instance.StartConversationCoroutine());
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine(BotDirectLineManager.Instance.SendMessageCoroutine(
-                _conversationState.ConversationId, "UnityUserId", "Hello bot!", "Unity User 1"));
-        }
     }
 
     public void EnviaMensagem(string message, string userId, string userName)
@@ -66,6 +59,10 @@ public class BotController : MonoBehaviour {
                 break;
             case EventTypes.MessageReceived:
                 // Handle the received message(s)
+                if (Evt_OnMessageReceived != null)
+                {
+                    Evt_OnMessageReceived(e);
+                }
                 break;
             case EventTypes.Error:
                 // Handle the error

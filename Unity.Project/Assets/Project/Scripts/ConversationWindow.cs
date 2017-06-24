@@ -17,11 +17,12 @@ public class ConversationWindow : MonoBehaviour {
     public List<GameObject> spawnedMessages;
 
     public Talent.BaseSlide messageWindow;
-
-    public int currentCharacter = 0;
+    
     public Sprite[] charactersIcons;
 
     public InputField inputMensagem;
+
+    public int count = 0;
 
     public void Reset()
     {
@@ -34,11 +35,32 @@ public class ConversationWindow : MonoBehaviour {
     public void StartNewConversation()
     {
         Reset();
+        //Adiciona o listener de mensagens do bot
+        mainController.botController.Evt_OnMessageReceived += BotController_Evt_OnMessageReceived;
         OpenWindow(true);
     }
+
+    /// <summary>
+    /// Lida com a mensagem recebida
+    /// </summary>
+    /// <param name="data"></param>
+    private void BotController_Evt_OnMessageReceived(Assets.BotDirectLine.BotResponseEventArgs data)
+    {
+        //Sempre pega o ultimo watermark
+        int watermark = int.Parse(data.Watermark) - 1;
+        //Avalia a mensagem recebida
+        //TODO (filtrar caso seja botoes)
+        AddBotMessage(data.Messages[watermark].Text);
+    }
+
     public void OpenWindow(bool cmd)
     {
         messageWindow.SetSlideActive(cmd);
+        if (cmd == false)
+        {
+            //Remove o listener de mensagens do bot
+            mainController.botController.Evt_OnMessageReceived -= BotController_Evt_OnMessageReceived;
+        }
     }
     public void AddBotMessageWithButtons()
     {
@@ -48,7 +70,7 @@ public class ConversationWindow : MonoBehaviour {
     {
         //Spanwa
         GameObject g = (GameObject)Instantiate(prefabBotMessage, containerMessages);
-        g.GetComponent<Message>().SetMessage(message, charactersIcons[currentCharacter]);
+        g.GetComponent<Message>().SetMessage(message, charactersIcons[mainController.currentOpenActivity]);
         AddMessage(g);
     }
     public void AddPlayerMessage(string message)

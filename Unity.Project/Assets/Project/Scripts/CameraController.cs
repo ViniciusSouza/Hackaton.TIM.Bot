@@ -15,6 +15,10 @@ namespace Talent
         public Vector3 lookAtOffset;
         public float lerpSpeed = 2;
 
+        private Transform oldTarget;
+        private Vector3 oldOffset;
+        private Vector3 oldLookOffset;
+
         public void Initialize(Transform target)
         {
             followObject = target;
@@ -34,6 +38,22 @@ namespace Talent
         private void FollowPlayer()
         {
             thisTransform.position = Vector3.Lerp(thisTransform.position, followObject.position + offsetCameraPos, Time.deltaTime * lerpSpeed);
+        }
+        public void FocusSomething(Transform target, Vector3 offset, Vector3 lookOffset)
+        {
+            oldTarget = followObject;
+            oldOffset = offsetCameraPos;
+            oldLookOffset = lookAtOffset;
+
+            followObject = target;
+            offsetCameraPos = offset;
+            lookAtOffset = lookOffset;
+        }
+        public void RestoreOldFocus()
+        {
+            followObject = oldTarget;
+            offsetCameraPos = oldOffset;
+            lookAtOffset = oldLookOffset;
         }
     }
 }

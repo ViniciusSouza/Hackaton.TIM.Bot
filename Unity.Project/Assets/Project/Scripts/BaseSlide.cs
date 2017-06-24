@@ -10,6 +10,9 @@ namespace Talent
     public class BaseSlide : MonoBehaviour
     {
         public Animator slideAnimator;
+        public Vector3 offset;
+        public Vector3 lookOffset;
+        public Transform targetLook;
         
         /// <summary>
         /// Mostra ou esconde esse slide

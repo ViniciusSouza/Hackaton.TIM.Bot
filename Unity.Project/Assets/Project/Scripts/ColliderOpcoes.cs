@@ -9,21 +9,33 @@ public class ColliderOpcoes : MonoBehaviour {
 
     public MainController controller;
 
+
     public enum BOT_TYPE
     {
         DetalhesConta,
-        Servicos,
         Faq,
-        Minigame
+        Servicos,
+        Minigame,
+        Center
     }
     public BOT_TYPE thisType;
 
     public void OnTriggerEnter(Collider other)
     {
-        controller.OpenCharacter(thisType);
+        if (thisType != BOT_TYPE.Center)
+            controller.OpenCharacter(thisType);
+        else
+        {
+            controller.GetBackToCenter();
+        }
     }
     public void OnTriggerExit(Collider other)
     {
-        controller.ExitCharacter(thisType);
+        if (thisType != BOT_TYPE.Center)
+            controller.ExitCharacter(thisType);
+        else
+        {
+            controller.ExitCenter();
+        }
     }
 }
