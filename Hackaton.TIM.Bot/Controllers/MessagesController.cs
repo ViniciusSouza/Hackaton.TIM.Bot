@@ -6,6 +6,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Hackaton.TIM.Bot.Models;
 using System;
+using System.Configuration;
 
 namespace Hackaton.TIM.Bot
 {
@@ -47,11 +48,9 @@ namespace Hackaton.TIM.Bot
                 var value = activity.Value.ToString().ToLower();
                 if (!string.IsNullOrEmpty(value))
                 {
-                    var microsoftAppId = "f9789938-7703-4ac2-9e17-8f0fe96dd7ab";
-                    var microsoftAppPassword = "b3ofAxnPp9xqeZbkfaHBdvs";
-
-                    StateClient stateClient = new StateClient(new MicrosoftAppCredentials(microsoftAppId, microsoftAppPassword));
-                    BotData userData = await stateClient.BotState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
+                  
+                    StateClient stateClient = activity.GetStateClient();
+                    BotData userData = await stateClient.BotState.GetUserDataAsync(activity.ChannelId, activity.Conversation.Id);
 
                     if (value.Contains("call"))
                     {

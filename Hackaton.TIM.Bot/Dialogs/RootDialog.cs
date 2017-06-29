@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Hackaton.TIM.Bot.Models;
+using System.Configuration;
 
 namespace Hackaton.TIM.Bot.Dialogs
 {
@@ -17,43 +18,49 @@ namespace Hackaton.TIM.Bot.Dialogs
 
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
-            var activity = await result as Activity;
 
-            var microsoftAppId = "f9789938-7703-4ac2-9e17-8f0fe96dd7ab";
-            var microsoftAppPassword = "b3ofAxnPp9xqeZbkfaHBdvs";
-            var channelId = "webchat";
-
-            StateClient stateClient = new StateClient(new MicrosoftAppCredentials(microsoftAppId, microsoftAppPassword));
-            BotData userData = await stateClient.BotState.GetUserDataAsync(channelId, activity.From.Id);
-
-            var dialog = userData.GetProperty<string>("Dialog");
-            if (dialog != null)
+            try
             {
-                switch (dialog)
+                var activity = await result as Activity;
+
+                StateClient stateClient = activity.GetStateClient();
+                BotData userData = await stateClient.BotState.GetUserDataAsync(activity.ChannelId, activity.Conversation.Id);
+
+              //    var dialog = userData.GetProperty<string>("Dialog");
+
+                var dialog = "faq";
+                if (dialog != null)
                 {
-                    case "detalhamentoconta":
-                        context.Call(new DetalhamentoDeUsoDialog(DetalhamentoContaRequest.BuildForm), ResumeAfter);
-                        break;
-                    case "faq":
-                        context.Call(new LuisDialog(), ResumeAfter);
-                        break;
-                    case "servicos":
-                        context.Call(new ServicosDialog(), ResumeAfter);
-                        break;
-                    default:
-                        context.Wait(MessageReceivedAsync);
-                        break;
+                    switch (dialog)
+                    {
+                        case "detalhamentoconta":
+                            context.Call(new DetalhamentoDeUsoDialog(DetalhamentoContaRequest.BuildForm), ResumeAfter);
+                            break;
+                        case "faq":
+                            context.Call(new LuisDialog(), ResumeAfter);
+                            break;
+                        case "servicos":
+                            context.Call(new ServicosDialog(), ResumeAfter);
+                            break;
+                        default:
+                            context.Wait(MessageReceivedAsync);
+                            break;
+                    }
+                }
+                else
+                {
+                    context.Wait(MessageReceivedAsync);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                context.Wait(MessageReceivedAsync);
+                var a = ex;
             }
         }
 
         private async Task ResumeAfter(IDialogContext context, IAwaitable<object> result)
         {
-            await context.PostAsync("back to black");
+            await context.PostAsync("Qualquer coisa é só me chamar que eu estarei por aqui...");
             context.Wait(MessageReceivedAsync);
         }
 
