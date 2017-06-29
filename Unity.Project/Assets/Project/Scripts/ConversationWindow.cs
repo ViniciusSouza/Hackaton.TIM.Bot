@@ -26,11 +26,18 @@ public class ConversationWindow : MonoBehaviour {
     public Content attachmentDebug = new Content();
     public TextAsset txtJson;
 
+    private List<string> tempRoteiro = new List<string>();
+    public List<string> premadeRoteiro = new List<string>();
+
     public int count = 0;
 
     private void Start()
     {
         attachmentDebug = JsonUtility.FromJson<Content>(txtJson.text);
+        for (int x = 0; x < premadeRoteiro.Count; x++)
+        {
+            tempRoteiro.Add(premadeRoteiro[x]);
+        }
     }
     public void Reset()
     {
@@ -165,15 +172,43 @@ public class ConversationWindow : MonoBehaviour {
             AddPlayerMessage(input);
         }
 
-        //ToDO - meu deus
+        //ToDO - meu deus - front end que nao fala com backend
         if (mainController.currentOpenActivity == 1)
         {
-            mainController.EnviaMensagem(input);
+            //
+            //mainController.EnviaMensagem(input);
+            StartCoroutine(AddRoteiroMessage());
         }
         else
         {
-            AddBotFatura("Sua conta:", attachmentDebug);
-            Debug.Log("Esta tentando mandar de outro");
+            //AddBotFatura("Sua conta:", attachmentDebug);
+            //Debug.Log("Esta tentando mandar de outro");
+            StartCoroutine(AddContaMessage());
         }
+    }
+    IEnumerator AddContaMessage()
+    {
+        yield return new WaitForSeconds(2);
+
+        AddBotFatura("Sua conta:", attachmentDebug);
+
+        yield return new WaitForEndOfFrame();
+
+        Canvas.ForceUpdateCanvases();
+    }
+    IEnumerator AddRoteiroMessage()
+    {
+        yield return new WaitForSeconds(Random.Range(1.0f, 2f));
+
+        if (tempRoteiro.Count == 0)
+        {
+            for (int x = 0; x < premadeRoteiro.Count; x++)
+            {
+                tempRoteiro.Add(premadeRoteiro[x]);
+            }
+        }
+
+        AddBotMessage(tempRoteiro[0]);
+        tempRoteiro.RemoveAt(0);
     }
 }
